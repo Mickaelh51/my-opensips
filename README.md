@@ -1,2 +1,2 @@
 # my-opensips
-My OpenSIPS configurations exemples
+My OpenSIPS configuration examples
