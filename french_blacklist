@@ -1,0 +1,46 @@
+# You can see bellow a blacklist configuration
+# it's used with french numbers's specifications
+# 3BPQ / 118XYZ / 10PQ
+# This conf uses 3 blacklist tables in mysql databases.
+
+
+
+# ----------------- module blacklist ---------------
+loadmodule "userblacklist.so"
+# ----------- blacklist params ------------
+modparam("userblacklist", "db_url", "mysql://*******:******@******/sip_access")
+modparam("userblacklist", "use_domain", 0)
+
+# Sub route block
+route[blacklist]
+{
+    #Short numbers
+    if($rU=~"^3[0-9]{3}$" || $rU=~"^10[0-9]{2}$" || $rU=~"^118[0-9]{3}")
+    {
+        if (!check_user_blacklist("$au","$fd",,"userblacklist_short"))
+        {
+            xlog("L_INFO","$ci -- In Blacklist short -- $au not authorize to call $rU\n");
+            sl_send_reply("403", "Forbidden");
+            exit;
+        }
+    }
+    else if($rU=~"^\+33[1-9]{1}[0-9]{8}$")
+    {
+        if (!check_user_blacklist("$au","$fd",,"userblacklist_france"))
+        {
+            xlog("L_INFO","$ci -- In Blacklist France -- $au not authorize to call $rU\n");
+            sl_send_reply("403", "Forbidden");
+            exit;
+        }
+    }
+    else
+    {
+        if (!check_user_blacklist("$au","$fd",,"userblacklist_international"))
+        {
+            xlog("L_INFO","$ci -- In Blacklist International -- $au not authorize to call $rU\n");
+            sl_send_reply("403", "Forbidden");
+            exit;
+        }
+    }
+return;
+}
