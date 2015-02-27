@@ -2,6 +2,7 @@
 # it's used with french numbers's specifications
 # 3BPQ / 118XYZ / 10PQ
 # This conf uses 3 blacklist tables in mysql databases.
+# http://www.opensips.org/html/docs/modules/1.11.x/userblacklist.html
 
 #CREATE TABLE IF NOT EXISTS `userblacklist_france` (
 #  `id` int(10) unsigned NOT NULL,
