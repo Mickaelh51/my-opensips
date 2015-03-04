@@ -41,9 +41,9 @@ route[blacklist]
         xlog("L_INFO","$ci -- In Blacklist short calls-- $au to $rU\n");
         if (!check_user_blacklist("$au","$fd",,"userblacklist_short"))
         {
-            xlog("L_INFO","$ci -- In Blacklist short -- $au not authorize to call $rU\n");
-            sl_send_reply("403", "Forbidden - Destination Has Been Blacklisted");
-            exit;
+            	xlog("L_INFO","$ci -- In Blacklist short -- $au not authorize to call $rU\n");
+            	sl_send_reply("403", "Forbidden - Destination Has Been Blacklisted");
+            	exit;
         }
     }
     else if($rU=~"^\+33[1-9]{1}[0-9]{8}$")
@@ -51,9 +51,9 @@ route[blacklist]
         xlog("L_INFO","$ci -- In Blacklist france calls-- $au to $rU\n");
         if (!check_user_blacklist("$au","$fd",,"userblacklist_france"))
         {
-            xlog("L_INFO","$ci -- In Blacklist France -- $au not authorize to call $rU\n");
-            sl_send_reply("403", "Forbidden - Destination Has Been Blacklisted");
-            exit;
+            	xlog("L_INFO","$ci -- In Blacklist France -- $au not authorize to call $rU\n");
+            	sl_send_reply("403", "Forbidden - Destination Has Been Blacklisted");
+            	exit;
         }
     }
     else if($rU=~"^\+[0-9]*$" && $rU!~"^\+33")
@@ -61,16 +61,16 @@ route[blacklist]
         xlog("L_INFO","$ci -- In Blacklist international calls-- $au to $rU\n");
         if (!check_user_blacklist("$au","$fd",,"userblacklist_international"))
         {
-            xlog("L_INFO","$ci -- In Blacklist International -- $au not authorize to call $rU\n");
-            sl_send_reply("403", "Forbidden - Destination Has Been Blacklisted");
-            exit;
+            	xlog("L_INFO","$ci -- In Blacklist International -- $au not authorize to call $rU\n");
+            	sl_send_reply("403", "Forbidden - Destination Has Been Blacklisted");
+            	exit;
         }
     }
-		else
-		{
-				xlog("L_INFO","$ci -- In Blacklist -- Wrong Number Ru: $rU\n");
-				sl_send_reply("485", "Ambiguous Number");
-				exit;
-		}
+	else
+	{
+		xlog("L_INFO","$ci -- In Blacklist -- Wrong Number Ru: $rU\n");
+		sl_send_reply("485", "Ambiguous Number");
+		exit;
+	}
 return;
 }
