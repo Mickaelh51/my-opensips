@@ -38,30 +38,39 @@ route[blacklist]
     #Short numbers
     if($rU=~"^3[0-9]{3}$" || $rU=~"^10[0-9]{2}$" || $rU=~"^118[0-9]{3}")
     {
+        xlog("L_INFO","$ci -- In Blacklist short calls-- $au to $rU\n");
         if (!check_user_blacklist("$au","$fd",,"userblacklist_short"))
         {
             xlog("L_INFO","$ci -- In Blacklist short -- $au not authorize to call $rU\n");
-            sl_send_reply("403", "Forbidden");
+            sl_send_reply("403", "Forbidden - Destination Has Been Blacklisted");
             exit;
         }
     }
     else if($rU=~"^\+33[1-9]{1}[0-9]{8}$")
     {
+        xlog("L_INFO","$ci -- In Blacklist france calls-- $au to $rU\n");
         if (!check_user_blacklist("$au","$fd",,"userblacklist_france"))
         {
             xlog("L_INFO","$ci -- In Blacklist France -- $au not authorize to call $rU\n");
-            sl_send_reply("403", "Forbidden");
+            sl_send_reply("403", "Forbidden - Destination Has Been Blacklisted");
             exit;
         }
     }
-    else
+    else if($rU=~"^\+[0-9]*$" && $rU!~"^\+33")
     {
+        xlog("L_INFO","$ci -- In Blacklist international calls-- $au to $rU\n");
         if (!check_user_blacklist("$au","$fd",,"userblacklist_international"))
         {
             xlog("L_INFO","$ci -- In Blacklist International -- $au not authorize to call $rU\n");
-            sl_send_reply("403", "Forbidden");
+            sl_send_reply("403", "Forbidden - Destination Has Been Blacklisted");
             exit;
         }
     }
+		else
+		{
+				xlog("L_INFO","$ci -- In Blacklist -- Wrong Number Ru: $rU\n");
+				sl_send_reply("485", "Ambiguous Number");
+				exit;
+		}
 return;
 }
